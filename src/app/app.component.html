@@ -1,9 +1,15 @@
-<form class="card-body">
-  <label for="title">Titulo:</label>
-  <input type="text" name="dni" #dni class="form-control" 
-  autofocus/>
-  <button type="button" (click)="showDocument(dni)" class="btn btn-primary
-  btn-block mt-4">
+<mat-toolbar>
+  <span>Busqueda por DNI</span>
+</mat-toolbar>
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<form class="example-form" [formGroup]="form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>DNI</mat-label>
+    <input formControlName="dni" matInput type="text" name="dni" #dni class="input" placeholder="DNI" autofocus required
+      maxlength="8" minlength="0" />
+  </mat-form-field>
+<p>{{errorMessage}}</p>
+  <button mat-button color="primary" type="button" (click)="showDocument(dni)">
     Generar Titulo
   </button>
 </form>

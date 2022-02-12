@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,7 +13,14 @@ export class TitleService {
 
   constructor(private http: HttpClient) { }
 
-  public findById(dni:any): Observable<Blob> {
-    return this.http.get(`${this.getUrl}/pdf/generate/${dni}`, {responseType: 'blob'});
+  public findByDni(dni: any): Observable<Blob> {
+    return this.http.get(`${this.getUrl}/pdf/generate/${dni}`, { responseType: 'blob' })
+      .pipe(
+        catchError(this.errorHandler)
+          );
+  }
+
+  errorHandler(error:HttpErrorResponse){
+    return throwError(error.message);
   }
 }
